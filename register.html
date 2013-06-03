@@ -1,0 +1,73 @@
+<style>
+	.outer-box {
+		width: 332px;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+	}
+		
+		.outer-box .register-box {
+			border: solid 1px silver;
+			padding: 15px;
+			width: 300px;
+		}
+		
+			.outer-box .register-box .login-head {
+				color: #555;
+				font-size: 28px;
+				margin-bottom: 15px;
+			}
+			
+			.outer-box .register-box .name-input {
+				height: 35px;
+				line-height: 28px;
+				font-size: 25px;
+				color: grey;
+			}
+			
+		.outer-box .confirm-name-area {
+			background-color: silver;
+			width: 100%;
+			height: 0px;
+		}
+		
+			.outer-box .confirm-name-area .confirm-name {
+				font-size: 24px;
+				text-decoration: none;
+				color: white;
+			}
+	
+</style>
+<div class="outer-box">
+	<div class="register-box">
+		<div class="login-head">What's your name?</div>
+		<input class="name-input"/>
+	</div>
+	<div class="confirm-name-area">
+		<a href="#" class="confirm-name">Continue</a>
+		<script>
+			var confirm = $(".confirm-name");
+			confirm.hover(function() {
+				confirm.animate({color: "#669999"}, 300);
+			}, function() {
+				confirm.animate({color: "white"}, 300);
+			});
+			
+			confirm.click(function() {
+				// Move on to the next screen
+			});
+			
+			var input = $(".name-input");
+			input.on("input", function() {
+				if ($(this).val().length > 2) {
+					$(".confirm-name-area").animate({height: "28px"}, 300);
+					confirm.fadeIn();
+				}
+				else {
+					confirm.fadeOut();
+					$(".confirm-name-area").animate({height: "0px"}, 300);
+				}
+			});
+		</script>
+	</div>
+</div>
