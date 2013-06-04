@@ -1,17 +1,20 @@
 var confirm = $(".confirm-name");
-confirm.hover(function() {
+var input = $(".name-input");
+
+confirm.hover(function () {
+	confirm.stop();
 	confirm.animate({color: "#669999"}, 300);
-}, function() {
+}, function () {
+	confirm.stop();
 	confirm.animate({color: "white"}, 300);
 });
 
 confirm.click(function() {
 	// Move on to the next screen and store the username
-	localStorage.chatName = $(".name-input").val();
+	localStorage.chatName = input.val();
 	$(".main-area").load("./chat.html");
 });
 
-var input = $(".name-input");
 input.on("input", function() {
 	if ($(this).val().length > 2) {
 		$(".confirm-name-area").animate({height: "28px"}, 300);

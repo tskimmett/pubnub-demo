@@ -3,4 +3,3 @@ if (!localStorage.chatName) {
 	page = "./register.html";
 }
 $(".main-area").load(page);
-	
