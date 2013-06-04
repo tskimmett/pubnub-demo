@@ -10,5 +10,5 @@ $(window).resize(onResize);
 onResize();
 
 var uBox = $(".user-box");
-uBox[0].innerText = localStorage.chatName;
+uBox[0].innerText =localStorage.chatName;
 uBox.animate({marginRight: "0px"});
