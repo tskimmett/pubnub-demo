@@ -4,6 +4,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		text-align: center;
+		margin-top: 100px;
 	}
 		
 		.outer-box .register-box {
@@ -35,6 +36,7 @@
 				font-size: 24px;
 				text-decoration: none;
 				color: white;
+				display: none;
 			}
 	
 </style>
@@ -45,29 +47,6 @@
 	</div>
 	<div class="confirm-name-area">
 		<a href="#" class="confirm-name">Continue</a>
-		<script>
-			var confirm = $(".confirm-name");
-			confirm.hover(function() {
-				confirm.animate({color: "#669999"}, 300);
-			}, function() {
-				confirm.animate({color: "white"}, 300);
-			});
-			
-			confirm.click(function() {
-				// Move on to the next screen
-			});
-			
-			var input = $(".name-input");
-			input.on("input", function() {
-				if ($(this).val().length > 2) {
-					$(".confirm-name-area").animate({height: "28px"}, 300);
-					confirm.fadeIn();
-				}
-				else {
-					confirm.fadeOut();
-					$(".confirm-name-area").animate({height: "0px"}, 300);
-				}
-			});
-		</script>
+		<script src="./register.js"></script>
 	</div>
 </div>
