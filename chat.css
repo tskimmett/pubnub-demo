@@ -2,6 +2,57 @@
 	width: 100%;
 }
 
+	.chat-screen .message-area {
+		height: 100%;
+		float: left;
+		position: relative;
+		text-align: center;
+		display: block;
+	}
+
+		.chat-screen .message-area .messages {
+			position: relative;
+			width: 100%;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+
+			.chat-screen .message-area .messages .message {
+				text-align: left;
+				background-color: silver;
+				width: 100%;
+				padding: 10px;
+				border-top: solid 1px #555;
+				word-wrap: break-word;
+			}
+
+			.chat-screen .message-area .messages:first-child {
+				border-top: none;
+			}
+
+			.chat-screen .message-area .messages .message .body {
+				color: #242323;
+				font-size: 20px;
+				max-width: 100%;
+				margin-right: 25px;
+			}
+
+			.chat-screen .message-area .messages .message .source {
+				color: #808080;
+				font-size: 18px;
+				margin-left: 20px;
+			}
+
+		.chat-screen .message-area .message-input {
+			width: 90%;
+			position: absolute;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			bottom: 0;
+			height: 35px;
+			font-size: 18px;
+		}
+
 	.chat-screen .member-area {
 		float: right;
 		background-color: #ddd;
@@ -12,6 +63,7 @@
 		font-weight: bold;
 		color: #273621;
 		font-size: 18px;
+		z-index: 0;
 	}
 
 		.chat-screen .member-area p {
