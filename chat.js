@@ -16,14 +16,13 @@ var P = PUBNUB.init({
 	uuid: localStorage.chatName
 });
 
-var members = {};
-var messages = [];
-
 function handlePresence(msg) {
 	console.log("Presence: " + JSON.stringify(msg));
 	if (msg.action == "leave") {
 		// Remove from member UI list
-		delete members[msg.uuid];
+		$(".member-area p:contains('" + msg.uuid + "')").animate({ marginLeft: "100%" }, function () {
+			$(this).remove()
+		});
 		// Someone is backing out because they tried to use your name. Resubscribe.
 		if (msg.uuid == localStorage.chatName) {
 			P.subscribe({
@@ -33,10 +32,10 @@ function handlePresence(msg) {
 			});
 		}
 	}
-	else if (msg.action == "join") {
-		delete msg.occupancy;
-		members[msg.uuid] = msg;
+	else if (msg.action == "join" && msg.uuid != localStorage.chatName && !$(".member-area p:contains('" + msg.uuid + "')").length) {
 		// Add member to UI list
+		$(".member-area").append("<p>" + msg.uuid + "</p>");
+		$(".member-area p:contains('" + msg.uuid + "')").animate({ marginLeft: "0px" });
 	}
 };
 
@@ -58,18 +57,24 @@ P.here_now({
 		console.log("Here_now: " + JSON.stringify(msg));
 		var uuids = msg.uuids;
 		for (var i = 0; i < uuids.length; i++) {
-			if (uuids[i] == localStorage.chatName) {
+			var uuid = uuids[i];
+			if (uuid == localStorage.chatName) {
 				P.unsubscribe({ channel: "chat" });
 				delete localStorage.chatName;
-				alert("Chat name in use");
+				alert("Your name is already in use. Please choose a different one.");
 				// Go back to name selection
 				$(".main-area").load("./register.html");
 				return;
 			}
+			else if (!$(".member-area p:contains('" + uuid + "')").length) {
+				// Add member to UI list
+				$(".member-area").append("<p>" + uuid + "</p>");
+				$(".member-area p:contains('" + uuid + "')").animate({ marginLeft: "0px" });
+			}
 		}
 		// Remember the name from localStorage
 		var uBox = $(".user-box");
-		uBox[0].innerText = localStorage.chatName;
+		uBox[0].innerHTML = localStorage.chatName;
 		uBox.animate({ marginRight: "0px" });
 	}
 });
