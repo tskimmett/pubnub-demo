@@ -15,9 +15,9 @@ function onResize() {
 $(window).resize(onResize);
 onResize();
 
-/***
-	PubNub Stuff and Chat Logic
- ***/
+/********************************
+ *	PubNub Stuff and Chat Logic *
+ ********************************/
 
 var CHANNEL = "chat"
 
@@ -55,7 +55,7 @@ function handlePresence(msg) {
 function handleMessage(msg) {
 	var msg = JSON.parse(msg);
 	var messages = $(".messages");
-	messages.append("<div class='message'><p class='body'>" + msg.text + "</p><p class='source'>" + (msg.source == localStorage.chatName ? "You" : msg.source) + "</p></div>")
+	messages.append("<div class='message'><p class='body'>" + msg.text + "</p><p class='source'>" + msg.source + "</p></div>")
 	messages.stop();
 	messages.animate({ scrollTop: messages[0].scrollHeight }, 500);
 };
@@ -72,9 +72,8 @@ P.here_now({
 	channel: CHANNEL,
 	callback: function (msg) {
 		console.log("Here_now: " + JSON.stringify(msg));
-		var uuids = msg.uuids;
-		for (var i = 0; i < uuids.length; i++) {
-			var uuid = uuids[i];
+		for (var i in msg.uuids) {
+			var uuid = msg.uuids[i];
 			if (uuid == localStorage.chatName) {
 				P.unsubscribe({ channel: "chat" });
 				alert("The name '" + localStorage.chatName + "' is already in use. Please choose a different one.");
