@@ -53,11 +53,11 @@ function handlePresence(msg) {
 };
 
 function handleMessage(msg) {
-	console.log(msg);
 	var msg = JSON.parse(msg);
 	var messages = $(".messages");
 	messages.append("<div class='message'><p class='body'>" + msg.text + "</p><p class='source'>" + (msg.source == localStorage.chatName ? "You" : msg.source) + "</p></div>")
-	messages.animate({ scrollTop: messages.height() });
+	messages.stop();
+	messages.animate({ scrollTop: messages[0].scrollHeight }, 500);
 };
 
 // Subscribe to presence and messages
@@ -84,6 +84,7 @@ P.here_now({
 				$(".main-area").load("./register.html");
 				return;
 			}
+			// Prevent duplicate members in the list
 			else if (!$(".member-area p:contains('" + uuid + "')").length) {
 				// Add member to UI list
 				$(".member-area").append("<p>" + uuid + "</p>");
@@ -94,6 +95,14 @@ P.here_now({
 		var uBox = $(".user-box");
 		uBox[0].innerHTML = localStorage.chatName;
 		uBox.animate({ marginRight: "0px" });
+
+		P.history({
+			channel: CHANNEL,
+			limit: 20,
+			callback: function (messages) {
+				messages[0].forEach(handleMessage);
+			}
+		});
 	}
 });
 
